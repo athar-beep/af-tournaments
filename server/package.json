@@ -1,0 +1,11 @@
+{
+  "name": "af-tournaments-server",
+  "version": "1.0.0",
+  "description": "Zero-dependency Node backend for AF TOURNAMENTS (serves the static site + JSON API).",
+  "type": "commonjs",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "dependencies": {}
+}
