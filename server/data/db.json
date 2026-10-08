@@ -1,0 +1,77 @@
+{
+  "tournaments": [
+    {
+      "id": "daily-match-01",
+      "name": "Daily Scrim · Match 01",
+      "tagline": "Morning lobby — be ready for check-in via WhatsApp.",
+      "status": "open",
+      "entryFeePerHead": 100,
+      "format": "All Formats",
+      "matchCount": 1,
+      "matchNote": "1 of 2 daily matches",
+      "times": [
+        "09:30"
+      ],
+      "teams": "Not Fixed",
+      "prize": null,
+      "registrationOpen": true,
+      "scoringPointsPerKill": 1
+    },
+    {
+      "id": "daily-match-02",
+      "name": "Daily Scrim · Match 02",
+      "tagline": "Second lobby of the day — same rules, new lobby.",
+      "status": "open",
+      "entryFeePerHead": 100,
+      "format": "All Formats",
+      "matchCount": 1,
+      "matchNote": "1 of 2 daily matches",
+      "times": [
+        "10:20"
+      ],
+      "teams": "Not Fixed",
+      "prize": null,
+      "registrationOpen": true,
+      "scoringPointsPerKill": 1
+    },
+    {
+      "id": "next-block",
+      "name": "Next Scrim Block",
+      "tagline": "Upcoming block — date drops first in the WhatsApp group.",
+      "status": "upcoming",
+      "entryFeePerHead": 100,
+      "format": "All Formats",
+      "matchCount": 2,
+      "matchNote": "2 matches per day",
+      "times": [
+        "09:30",
+        "10:20"
+      ],
+      "teams": "Not Fixed",
+      "prize": null,
+      "registrationOpen": false,
+      "scoringPointsPerKill": 1
+    },
+    {
+      "id": "previous-lobby",
+      "name": "Previous Daily Lobby",
+      "tagline": "Lobby closed — watch the group for the next announcement.",
+      "status": "closed",
+      "entryFeePerHead": 100,
+      "format": "All Formats",
+      "matchCount": 2,
+      "matchNote": "2 matches per day",
+      "times": [
+        "09:30",
+        "10:20"
+      ],
+      "teams": "Not Fixed",
+      "prize": null,
+      "registrationOpen": false,
+      "scoringPointsPerKill": 1
+    }
+  ],
+  "registrations": [],
+  "matches": [],
+  "announcements": []
+}
