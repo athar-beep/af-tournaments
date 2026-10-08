@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AF TOURNAMENTS — Admin Portal</title>
+  <meta name="description" content="AF TOURNAMENTS admin portal: registrations, payments and tournaments." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#080808" />
+  <link rel="icon" href="assets/img/logo-placeholder.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="stylesheet" href="assets/css/tracking.css" />
+  <link rel="stylesheet" href="assets/css/admin.css" />
+  <link rel="stylesheet" href="assets/css/matches.css" />
+  <link rel="stylesheet" href="assets/css/announcements.css" />
+</head>
+<body>
+  <a class="skip-link" href="#admin-main">Skip to admin content</a>
+
+  <header class="site-header admin-bar">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="Back to public site">
+        <span class="logo-slot" aria-hidden="true"><span class="logo-fallback">AF</span></span>
+        <span class="brand-text"><span class="brand-name">AF TOURNAMENTS</span><span class="brand-sub">ADMIN PORTAL</span></span>
+      </a>
+      <div class="admin-who" id="admin-who" hidden>
+        <span>Signed in as <code id="admin-actor"></code></span>
+        <button class="btn btn-outline btn-sm" type="button" id="admin-logout" style="color:#fff;border-color:#555">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="admin-main">
+    <!-- LOGIN -->
+    <section id="view-login" aria-labelledby="login-title">
+      <div class="container admin-login">
+        <div class="login-card">
+          <span class="eyebrow">Restricted area</span>
+          <h1 id="login-title" style="font-size:1.7rem">Admin sign in</h1>
+          <p class="muted" style="font-size:.92rem">Tournament management requires an admin session. Unauthorized visitors cannot reach the dashboard — it is not rendered without a session.</p>
+          <div class="demo-note" role="note">
+            <strong>Demo mode — not real security.</strong> No backend exists yet, so this gate cannot stop anyone who reads the code.
+            Demo access code: <code>AF-DEMO-2026</code>. Real password/session verification plugs into <code>assets/js/auth.js</code> when a backend ships.
+          </div>
+          <form id="login-form" novalidate>
+            <div class="field" style="margin-top:12px">
+              <label for="login-actor">Admin display name</label>
+              <input type="text" id="login-actor" maxlength="40" autocomplete="username" placeholder="e.g. Faisal (Organizer)" style="width:100%;min-height:48px;border:1px solid var(--color-line);border-radius:10px;padding:11px 13px;font-size:1rem" />
+            </div>
+            <div class="field" style="margin-top:12px">
+              <label for="login-code">Access code / password</label>
+              <input type="password" id="login-code" autocomplete="current-password" placeholder="Access code" style="width:100%;min-height:48px;border:1px solid var(--color-line);border-radius:10px;padding:11px 13px;font-size:1rem" />
+            </div>
+            <p class="f-error" id="login-err" role="alert" style="display:none;color:#8f1d17;font-weight:600"></p>
+            <button class="btn btn-accent btn-block" type="submit" style="margin-top:16px">Sign In</button>
+          </form>
+          <p style="margin-top:14px;font-size:.86rem"><a href="index.html">← Back to public site</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section id="view-admin" class="section" aria-labelledby="dash-title" hidden>
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Dashboard</span>
+          <h2 id="dash-title">Tournament operations</h2>
+          <p class="muted" id="dash-sub">Live numbers from on-device registration data. Empty states shown where there is nothing yet.</p>
+        </div>
+
+        <div class="stat-grid" id="stat-grid" aria-label="Key numbers"></div>
+
+        <div class="admin-tabs" role="tablist" aria-label="Admin sections">
+          <button class="tab-btn" role="tab" aria-selected="true" data-tab="overview" id="tab-overview" aria-controls="panel-overview">Overview</button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-tab="regs" id="tab-regs" aria-controls="panel-regs">Registrations</button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-tab="pays" id="tab-pays" aria-controls="panel-pays">Payments</button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-tab="tourns" id="tab-tourns" aria-controls="panel-tourns">Tournaments</button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-tab="matches" id="tab-matches" aria-controls="panel-matches">Matches</button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-tab="anns" id="tab-anns" aria-controls="panel-anns">Announcements</button>
+        </div>
+
+        <div id="panel-overview" role="tabpanel" aria-labelledby="tab-overview">
+          <h3>Recent registrations</h3>
+          <div class="adm-list" id="recent-list"></div>
+          <div class="trk-empty" id="recent-empty" hidden>
+            <h3>No registrations yet</h3>
+            <p>New public submissions from the registration form will appear here with live counts above.</p>
+          </div>
+        </div>
+
+        <div id="panel-regs" role="tabpanel" aria-labelledby="tab-regs" hidden>
+          <div class="admin-filters" role="search" aria-label="Filter registrations">
+            <div><label for="f-q">SEARCH</label><input type="search" id="f-q" placeholder="Team, ID, contact…" /></div>
+            <div><label for="f-tourn">TOURNAMENT</label><select id="f-tourn"><option value="all">All tournaments</option></select></div>
+            <div><label for="f-reg">REG STATUS</label><select id="f-reg">
+              <option value="all">All</option><option value="submitted">Submitted</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option><option value="cancelled">Cancelled</option>
+            </select></div>
+            <div><label for="f-pay">PAY STATUS</label><select id="f-pay">
+              <option value="all">All</option><option value="pending">Pending</option><option value="submitted">Submitted</option><option value="verified">Verified</option><option value="rejected">Rejected</option>
+            </select></div>
+          </div>
+          <p class="result-count" id="regs-count" role="status" aria-live="polite"></p>
+          <div class="adm-list" id="regs-list"></div>
+          <div class="trk-empty" id="regs-empty" hidden><h3>Nothing matches</h3><p>Adjust the filters to see registrations.</p></div>
+        </div>
+
+        <div id="panel-pays" role="tabpanel" aria-labelledby="tab-pays" hidden>
+          <h3>Payment review queue</h3>
+          <p class="muted" style="font-size:.9rem">Only references that were actually submitted appear here. Verifying means you checked the money — never automatic.</p>
+          <p class="result-count" id="pays-count" role="status" aria-live="polite"></p>
+          <div class="adm-list" id="pays-list"></div>
+          <div class="trk-empty" id="pays-empty" hidden><h3>Queue is clear</h3><p>No payments are waiting for verification right now.</p></div>
+        </div>
+
+        <div id="panel-tourns" role="tabpanel" aria-labelledby="tab-tourns" hidden>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between">
+            <h3 style="margin:0">Scrims &amp; tournaments</h3>
+            <button class="btn btn-accent btn-sm" type="button" id="tourn-new">+ New Tournament</button>
+          </div>
+          <p class="muted" style="font-size:.9rem">Edits apply to the public site immediately (same device). Dates stay WhatsApp-announced — there is no date field. Prize stays empty unless you enter a real value.</p>
+          <div class="adm-list" id="tourns-list"></div>
+
+          <form class="t-form" id="tourn-form" novalidate hidden aria-label="Tournament editor">
+            <h3 id="tourn-form-title" style="margin:0">New tournament</h3>
+            <div class="f-2">
+              <div><label for="t-id">Tournament ID</label><input id="t-id" placeholder="e.g. weekend-special" /><p class="f-error" data-tf="id"></p></div>
+              <div><label for="t-name">Tournament name</label><input id="t-name" maxlength="60" placeholder="e.g. Weekend Special" /><p class="f-error" data-tf="name"></p></div>
+            </div>
+            <div><label for="t-tagline">Short description</label><input id="t-tagline" maxlength="120" placeholder="One line players will see" /></div>
+            <div class="f-2">
+              <div><label for="t-format">Format</label><input id="t-format" list="fmt-list" value="All Formats" /><datalist id="fmt-list"><option value="All Formats"></option></datalist><p class="f-error" data-tf="format"></p></div>
+              <div><label for="t-teams">Teams</label><input id="t-teams" value="Not Fixed" /><p class="f-error" data-tf="teams"></p></div>
+            </div>
+            <div class="f-2">
+              <div><label for="t-fee">Entry fee per head (PKR)</label><input id="t-fee" type="number" min="0" max="100000" step="1" value="100" inputmode="numeric" /><p class="f-error" data-tf="entryFeePerHead"></p></div>
+              <div><label for="t-count">Match count</label><input id="t-count" type="number" min="1" max="10" step="1" value="2" inputmode="numeric" /><p class="f-error" data-tf="matchCount"></p></div>
+            </div>
+            <div><label for="t-times">Match times (comma separated, HH:MM)</label><input id="t-times" placeholder="09:30, 10:20" /><p class="f-error" data-tf="times"></p></div>
+            <div><label for="t-prize">Prize pool (leave empty = Coming soon — never invent)</label><input id="t-prize" maxlength="80" placeholder="Empty shows Coming soon" /></div>
+            <div class="f-2">
+              <div><label for="t-status">Tournament status</label><select id="t-status"><option value="open">OPEN</option><option value="upcoming">UPCOMING</option><option value="full">FULL</option><option value="closed">CLOSED</option></select><p class="f-error" data-tf="status"></p></div>
+              <div style="display:flex;align-items:end"><label class="checkline"><input type="checkbox" id="t-open" checked /> Registration open</label></div>
+            </div>
+            <div><label for="t-announce">Important announcement (optional)</label><input id="t-announce" maxlength="140" placeholder="Shown if set (future phases)" /></div>
+            <p class="f-error" id="tourn-form-err" role="alert"></p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <button class="btn btn-accent btn-sm" type="submit" id="tourn-save">Save Tournament</button>
+              <button class="btn btn-outline btn-sm" type="button" id="tourn-cancel">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        <div id="panel-matches" role="tabpanel" aria-labelledby="tab-matches" hidden>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between">
+            <h3 style="margin:0">Matches &amp; results</h3>
+            <button class="btn btn-accent btn-sm" type="button" id="match-new">+ New Match</button>
+          </div>
+          <p class="muted" style="font-size:.9rem">Matches belong to a tournament. New matches start as Scheduled. Room details stay admin-only and are never published. Results can only be recorded for Completed matches, and go public only after you publish them.</p>
+
+          <form class="t-form" id="scoring-form" aria-label="Scoring configuration">
+            <h3 style="margin:0;font-size:1rem">Scoring configuration</h3>
+            <p class="muted" style="font-size:.86rem;margin:0">Total = kills × points-per-kill + points. Configurable per tournament — never a publisher rule set.</p>
+            <div class="f-2">
+              <div><label for="score-tourn">Tournament</label><select id="score-tourn"></select></div>
+              <div><label for="score-ppk">Points per kill (0–10)</label><input id="score-ppk" type="number" min="0" max="10" step="1" value="1" inputmode="numeric" /></div>
+            </div>
+            <p class="f-error" id="scoring-err" role="alert"></p>
+            <p class="result-count" id="scoring-msg" role="status" aria-live="polite"></p>
+            <div><button class="btn btn-outline btn-sm" type="submit">Save Scoring</button></div>
+          </form>
+
+          <div class="admin-filters" role="search" aria-label="Filter matches">
+            <div><label for="m-tourn">TOURNAMENT</label><select id="m-tourn"><option value="all">All tournaments</option></select></div>
+            <div><label for="m-status">STATUS</label><select id="m-status">
+              <option value="all">All</option><option value="scheduled">Scheduled</option><option value="live">Live</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option>
+            </select></div>
+          </div>
+          <p class="result-count" id="matches-count" role="status" aria-live="polite"></p>
+          <div class="adm-list" id="matches-list"></div>
+          <div class="trk-empty" id="matches-empty" hidden>
+            <h3>No matches yet</h3>
+            <p>Create the first match for a tournament. Nothing is shown publicly until results are published.</p>
+          </div>
+
+          <form class="t-form" id="match-form" novalidate hidden aria-label="Match editor">
+            <h3 id="match-form-title" style="margin:0">New match</h3>
+            <div class="f-2">
+              <div><label for="mm-tourn">Tournament</label><select id="mm-tourn"></select><p class="f-error" data-mf="tournamentId"></p></div>
+              <div><label for="mm-num">Match number (1–20)</label><input id="mm-num" type="number" min="1" max="20" step="1" value="1" inputmode="numeric" /><p class="f-error" data-mf="matchNumber"></p></div>
+            </div>
+            <div class="f-2">
+              <div><label for="mm-time">Scheduled time (HH:MM)</label><input id="mm-time" placeholder="09:30" inputmode="numeric" /><p class="f-error" data-mf="scheduledTime"></p></div>
+              <div><label for="mm-room">Room info (admin-only, optional)</label><input id="mm-room" maxlength="200" placeholder="Kept private — never published" /><p class="f-error" data-mf="roomInfo"></p></div>
+            </div>
+            <div><label for="mm-notes">Notes / announcement (optional, public)</label><input id="mm-notes" maxlength="300" placeholder="Shown on the public match card" /><p class="f-error" data-mf="notes"></p></div>
+            <div><span id="mm-teams-label" style="font-weight:700;font-size:.88rem;display:block;margin-bottom:5px">Registered teams (read-only reference)</span><div id="mm-teams-view" class="muted" style="font-size:.88rem" role="note" aria-labelledby="mm-teams-label">Select a tournament to see registered teams.</div></div>
+            <p class="f-error" id="match-form-err" role="alert"></p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <button class="btn btn-accent btn-sm" type="submit">Save Match</button>
+              <button class="btn btn-outline btn-sm" type="button" id="match-cancel">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        <div id="panel-anns" role="tabpanel" aria-labelledby="tab-anns" hidden>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between">
+            <h3 style="margin:0">Announcements</h3>
+            <button class="btn btn-accent btn-sm" type="button" id="ann-new">+ New Announcement</button>
+          </div>
+          <p class="muted" style="font-size:.9rem">Drafts stay invisible publicly. Preview before publishing — published items appear on the public site immediately (author and history are never shown publicly).</p>
+
+          <div class="admin-filters" role="search" aria-label="Filter announcements">
+            <div><label for="ann-tourn">TOURNAMENT</label><select id="ann-tourn"><option value="all">All tournaments</option></select></div>
+            <div><label for="ann-type">TYPE</label><select id="ann-type">
+              <option value="all">All types</option><option value="general">General</option><option value="tournament">Tournament</option><option value="match">Match</option><option value="important">Important</option>
+            </select></div>
+            <div><label for="ann-status">VISIBILITY</label><select id="ann-status">
+              <option value="all">All</option><option value="published">Published</option><option value="draft">Draft</option>
+            </select></div>
+          </div>
+          <p class="result-count" id="anns-count" role="status" aria-live="polite"></p>
+          <div class="adm-list" id="anns-list"></div>
+          <div class="trk-empty" id="anns-empty" hidden>
+            <h3>No announcements yet</h3>
+            <p>Write the first notice. Nothing appears publicly until you publish it.</p>
+          </div>
+
+          <form class="t-form" id="ann-form" novalidate hidden aria-label="Announcement editor">
+            <h3 id="ann-form-title" style="margin:0">New announcement</h3>
+            <div><label for="an-title">Title</label><input id="an-title" maxlength="80" placeholder="e.g. Lobby codes drop at 09:00" /><p class="f-error" data-af="title"></p></div>
+            <div class="f-2">
+              <div><label for="an-type">Type</label><select id="an-type"><option value="general">General</option><option value="tournament">Tournament</option><option value="match">Match</option><option value="important">Important</option></select><p class="f-error" data-af="type"></p></div>
+              <div><label for="an-tourn">Tournament (optional)</label><select id="an-tourn"><option value="">All / general</option></select><p class="f-error" data-af="tournamentId"></p></div>
+            </div>
+            <div><label for="an-msg">Short message <span class="muted" id="an-msg-count" style="font-weight:400">(0/280)</span></label><textarea id="an-msg" maxlength="280" rows="2" placeholder="One or two lines shown on the card"></textarea><p class="f-error" data-af="message"></p></div>
+            <div><label for="an-details">Detailed message (optional)</label><textarea id="an-details" maxlength="2000" rows="4" placeholder="Shown when the reader expands the notice"></textarea><p class="f-error" data-af="details"></p></div>
+            <div style="display:flex;align-items:end"><label class="checkline"><input type="checkbox" id="an-pub" /> Publish immediately (otherwise saved as draft)</label></div>
+            <p class="f-error" id="ann-form-err" role="alert"></p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <button class="btn btn-accent btn-sm" type="submit">Save</button>
+              <button class="btn btn-outline btn-sm" type="button" id="ann-preview">Preview</button>
+              <button class="btn btn-outline btn-sm" type="button" id="ann-cancel">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="adm-dialog" id="adm-dialog" aria-labelledby="adm-dialog-title"></dialog>
+  <dialog class="adm-dialog" id="match-dialog" aria-labelledby="match-dialog-title"></dialog>
+  <dialog class="adm-dialog" id="ann-dialog" aria-labelledby="ann-dialog-title"></dialog>
+
+  <footer class="site-footer" aria-label="Footer">
+    <div class="container footer-bottom">
+      <span>© <span id="year">2026</span> AF TOURNAMENTS — Admin.</span>
+      <span><a href="index.html" style="color:#d8d8d8">Public site</a></span>
+    </div>
+  </footer>
+
+  <script src="assets/js/regstore.js" defer></script>
+  <script src="assets/js/tournstore.js" defer></script>
+  <script src="assets/js/matchstore.js" defer></script>
+  <script src="assets/js/announcestore.js" defer></script>
+  <script src="assets/js/api.js" defer></script>
+  <script src="assets/js/auth.js" defer></script>
+  <script src="assets/js/admin.js" defer></script>
+  <script src="assets/js/matches-admin.js" defer></script>
+  <script src="assets/js/announcements-admin.js" defer></script>
+</body>
+</html>

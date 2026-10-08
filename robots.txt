@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://af-tournaments.example.com/sitemap.xml
