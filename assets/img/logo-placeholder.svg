@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88" role="img" aria-label="AF logo placeholder">
+  <rect width="88" height="88" rx="18" fill="#080808"/>
+  <rect x="6" y="6" width="76" height="76" rx="14" fill="none" stroke="#C9A227" stroke-width="2"/>
+  <text x="44" y="56" text-anchor="middle" font-family="Arial, sans-serif" font-weight="800" font-size="32" fill="#F2C94C">AF</text>
+  <circle cx="68" cy="22" r="4" fill="#C9A227"/>
+</svg>
