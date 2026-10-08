@@ -1,0 +1,63 @@
+/* AF TOURNAMENTS — Part 4: Registration & payment tracking.
+   Token-only (var(--*)); no theme duplication. Status = glyph + text. */
+
+.tracking{background:var(--color-surface);border-block:1px solid var(--color-line)}
+
+/* Reusable status badges (also used in the Part 3 success panel) */
+.rq-status-row{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 4px}
+.rq-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--font-mono);font-size:.72rem;font-weight:700;letter-spacing:.12em;
+  border-radius:999px;padding:6px 13px;border:1px solid;
+}
+.rq-badge .glyph{font-size:.8rem}
+.rq-reg-submitted,.rq-pay-submitted{background:#fff8e3;color:var(--primitive-gold-deep);border-color:var(--primitive-gold-deep)}
+.rq-reg-pending,.rq-pay-pending{background:var(--color-bg);color:var(--color-muted);border-color:var(--color-line)}
+.rq-reg-approved,.rq-pay-verified{background:#0f1f14;color:#2f9e5f;border-color:#2f9e5f}
+.rq-reg-rejected{background:#fdecea;color:#8f1d17;border-color:#e5a09a}
+.rq-pay-rejected{background:#fdecea;color:#8f1d17;border-color:#e5a09a}
+.rq-reg-cancelled{background:var(--primitive-black);color:#cfcfcf;border-color:var(--primitive-black)}
+
+/* Lookup */
+.trk-lookup{background:var(--color-bg);border:1px solid var(--color-line);border-radius:var(--radius-md);padding:18px;display:grid;gap:12px;margin-bottom:var(--space-4)}
+@media(min-width:700px){.trk-lookup{grid-template-columns:1fr 1fr auto;align-items:end}}
+.trk-lookup .field{margin-top:0}
+.trk-lookup label{display:block;font-weight:700;font-size:.88rem;margin-bottom:6px}
+.trk-lookup input{width:100%;min-height:48px;border:1px solid var(--color-line);border-radius:10px;background:var(--color-surface);padding:11px 13px;font-size:1rem;color:var(--color-ink)}
+.trk-lookup input:focus{outline:none;border-color:var(--primitive-gold-deep);box-shadow:var(--focus-ring)}
+
+/* Record cards */
+.trk-list{display:grid;gap:14px}
+@media(min-width:860px){.trk-list{grid-template-columns:1fr 1fr}}
+.trk-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-xs)}
+.trk-card h3{margin:2px 0 0;font-size:1.1rem}
+.trk-id{font-family:var(--font-mono);font-size:.74rem;letter-spacing:.1em;color:var(--color-muted)}
+.trk-rows{margin:12px 0 0}
+.trk-rows .s-row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--color-line);padding-block:7px;font-size:.9rem}
+.trk-rows .s-row dt{color:var(--color-muted)}
+.trk-rows .s-row dd{margin:0;font-weight:700;text-align:right;overflow-wrap:anywhere}
+.trk-flag{background:#fdecea;border:1px solid #e5a09a;color:#8f1d17;border-radius:10px;padding:10px 12px;font-size:.86rem;font-weight:600;margin-top:10px}
+.trk-timeline{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:0}
+.trk-timeline li{display:flex;gap:10px;font-size:.84rem;padding-block:6px;color:var(--color-muted)}
+.trk-timeline li::before{content:"◆";color:var(--primitive-gold-deep);font-size:.65rem;margin-top:4px}
+.trk-timeline li:first-child{color:var(--color-ink);font-weight:600}
+.trk-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.trk-actions .btn{flex:1 1 150px}
+
+/* Legend */
+.trk-legend{margin-top:var(--space-8);border:1px dashed var(--color-line);border-radius:var(--radius-lg);padding:20px;background:var(--color-bg)}
+.trk-legend h3{margin-bottom:4px}
+.trk-legend p{font-size:.88rem;color:var(--color-muted)}
+.trk-legend .cols{display:grid;gap:14px;margin-top:12px}
+@media(min-width:700px){.trk-legend .cols{grid-template-columns:1fr 1fr}}
+.trk-legend h4{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;color:var(--primitive-gold-deep);margin:0 0 8px}
+.trk-legend ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+
+.trk-empty{border:1px dashed var(--color-line);border-radius:var(--radius-lg);padding:30px 22px;text-align:center;background:var(--color-bg)}
+.trk-empty p{color:var(--color-muted);margin-inline:auto}
+
+/* Backend connection banner (Part 6) — text + icon, never color alone */
+.api-banner{display:flex;gap:10px;align-items:flex-start;border-radius:var(--radius-md);padding:12px 16px;font-size:.88rem;margin-bottom:var(--space-4);border:1px solid}
+.api-banner .glyph{font-weight:800}
+.api-banner.remote{background:#0f1f14;color:#c9ecd6;border-color:#2f9e5f}
+.api-banner.offline{background:#fff8e3;color:#6b5312;border-color:var(--color-accent)}

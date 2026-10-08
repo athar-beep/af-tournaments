@@ -1,0 +1,42 @@
+/* AF TOURNAMENTS — Part 8: announcements.
+   Token-only (var(--*)). Restrained black/gold, mobile-first, no decoration
+   effects. Cards-first layout; no tables, no horizontal overflow. */
+
+.anns{background:var(--color-bg);border-block:1px solid var(--color-line)}
+
+/* Type badges: glyph + text, never color alone */
+.a-badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:.7rem;font-weight:700;letter-spacing:.12em;border-radius:999px;padding:5px 12px;border:1px solid var(--color-line);background:var(--color-surface);color:var(--color-ink)}
+.a-badge .glyph{font-size:.8rem}
+.a-general{background:var(--color-bg);color:var(--color-muted);border-color:var(--color-line)}
+.a-tournament{background:var(--primitive-black);color:var(--color-accent-bright);border-color:var(--primitive-black)}
+.a-match{background:#0f1f14;color:#2f9e5f;border-color:#2f9e5f}
+.a-important{background:#fff8e3;color:var(--primitive-gold-deep);border-color:var(--primitive-gold-deep)}
+.a-draft{background:#fdecea;color:#8f1d17;border-color:#e5a09a}
+
+/* Cards */
+.a-grid{display:grid;gap:14px;margin-top:var(--space-4)}
+@media(min-width:700px){.a-grid{grid-template-columns:repeat(2,1fr)}}
+.a-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-xs);display:flex;flex-direction:column}
+.a-card::before{content:"";display:block;height:5px;background:var(--color-line)}
+.a-card[data-type="important"]::before{background:var(--color-accent)}
+.a-card[data-type="tournament"]::before{background:var(--primitive-black)}
+.a-card[data-type="match"]::before{background:#2f9e5f}
+.a-card-body{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.a-card h3{margin:0;font-size:1.08rem}
+.a-meta{font-size:.8rem;color:var(--color-muted);font-family:var(--font-mono);letter-spacing:.02em}
+.a-msg{margin:0;font-size:.95rem}
+.a-details{margin:0;font-size:.88rem;color:var(--color-muted);white-space:pre-line}
+.a-card:target{box-shadow:var(--focus-ring)}
+
+/* Notices inside the tournament dialog */
+.a-notice-list{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+.a-notice-list li{border:1px solid var(--color-line);border-radius:10px;padding:10px 12px;background:var(--color-bg);font-size:.88rem}
+.a-notice-list strong{display:block;margin-bottom:2px}
+.a-notice-list small{color:var(--color-muted)}
+
+/* Focus + motion */
+.a-card a:focus-visible,.a-card summary:focus-visible{outline:none;box-shadow:var(--focus-ring)}
+.a-card summary{min-height:44px;display:inline-flex;align-items:center;font-weight:700;cursor:pointer}
+@media (prefers-reduced-motion:reduce){
+  .a-card{transition:none}
+}

@@ -1,0 +1,84 @@
+/* ============================================================
+   AF TOURNAMENTS — Design Tokens
+   3-layer: Primitive → Semantic → Component
+   Premium Light Esports / Black + Gold
+   ============================================================ */
+
+:root {
+  /* ---------- Primitive ---------- */
+  --primitive-bg-paper: #f5f5f2;
+  --primitive-white: #ffffff;
+  --primitive-black: #080808;
+  --primitive-dark-surface: #141414;
+  --primitive-dark-2: #1e1e1e;
+  --primitive-gold: #c9a227;
+  --primitive-gold-bright: #f2c94c;
+  --primitive-gold-deep: #7a5f10; /* Part 10: deepened for ≥4.5:1 body-text contrast on light surfaces (≈6:1 on white); gold identity preserved */
+  --primitive-ink: #111111;
+  --primitive-muted: #666666;
+  --primitive-line: #e4e1d8;
+  --primitive-line-dark: #2a2a2a;
+
+  /* ---------- Semantic ---------- */
+  --color-bg: var(--primitive-bg-paper);
+  --color-surface: var(--primitive-white);
+  --color-surface-dark: var(--primitive-dark-surface);
+  --color-ink: var(--primitive-ink);
+  --color-muted: var(--primitive-muted);
+  --color-line: var(--primitive-line);
+  --color-brand: var(--primitive-black);
+  --color-accent: var(--primitive-gold);
+  --color-accent-bright: var(--primitive-gold-bright);
+  --color-accent-ink: var(--primitive-black);
+
+  --font-display: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Type scale (semantic roles) */
+  --text-display: clamp(2.4rem, 6vw, 4.25rem);
+  --text-h2: clamp(1.6rem, 3.4vw, 2.4rem);
+  --text-h3: clamp(1.15rem, 2.2vw, 1.4rem);
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+  --text-caption: 0.78rem;
+
+  /* Spacing rhythm 4/8 */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-pill: 999px;
+
+  --shadow-xs: 0 1px 2px rgba(8, 8, 8, 0.06);
+  --shadow-sm: 0 2px 10px rgba(8, 8, 8, 0.07);
+  --shadow-md: 0 10px 30px rgba(8, 8, 8, 0.1);
+  --shadow-gold: 0 8px 24px rgba(201, 162, 39, 0.28);
+
+  /* ---------- Component ---------- */
+  --btn-primary-bg: var(--primitive-black);
+  --btn-primary-fg: #ffffff;
+  --btn-primary-hover: #1c1c1c;
+  --btn-accent-bg: var(--primitive-gold);
+  --btn-accent-fg: #080808;
+  --btn-accent-hover: var(--primitive-gold-bright);
+  --btn-secondary-bg: transparent;
+  --btn-secondary-fg: var(--primitive-black);
+  --btn-secondary-border: var(--primitive-black);
+
+  --card-bg: var(--primitive-white);
+  --card-border: var(--primitive-line);
+  --header-bg: rgba(245, 245, 242, 0.92);
+
+  --focus-ring: 0 0 0 3px rgba(201, 162, 39, 0.45);
+}

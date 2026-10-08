@@ -1,0 +1,74 @@
+/* AF TOURNAMENTS — Part 3: Scrim Registration.
+   Extends Part 1 tokens + buttons. No theme duplication: every value
+   comes from var(--*) tokens. Mobile-first, 44px+ touch targets. */
+
+.registration{background:var(--color-bg);border-block:1px solid var(--color-line)}
+.reg-layout{display:grid;gap:16px}
+@media(min-width:960px){.reg-layout{grid-template-columns:1.5fr 1fr;align-items:start}}
+
+.reg-form{background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius-lg);box-shadow:var(--shadow-xs)}
+.reg-form fieldset{border:none;margin:0;padding:22px 20px;border-bottom:1px solid var(--color-line);min-width:0}
+.reg-form fieldset:last-of-type{border-bottom:none}
+.reg-form legend{font-weight:800;font-size:1.02rem;padding:0;margin-bottom:2px}
+.step-num{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:8px;background:var(--primitive-black);color:var(--color-accent-bright);font-size:.8rem;font-weight:800;margin-right:8px;vertical-align:2px}
+.field{margin-top:var(--space-4);min-width:0}
+.field label{display:block;font-weight:700;font-size:.92rem;margin-bottom:6px}
+.field .hint{font-weight:400;color:var(--color-muted);font-size:.84rem;display:block;margin-top:2px}
+.field input[type="text"],.field input[type="tel"],.field input[type="number"],.field select,.field textarea{
+  width:100%;min-height:48px;border:1px solid var(--color-line);border-radius:10px;
+  background:var(--color-surface);padding:11px 13px;font-size:1rem;color:var(--color-ink);font-family:inherit;
+}
+.field textarea{min-height:96px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--primitive-gold-deep);box-shadow:var(--focus-ring)}
+.field input[aria-invalid="true"],.field select[aria-invalid="true"],.field textarea[aria-invalid="true"]{border-color:#b3261e;background:#fffafa}
+.f-error{display:none;color:#8f1d17;font-size:.85rem;font-weight:600;margin-top:6px}
+.f-error.show{display:block}
+.f-row{display:grid;gap:12px}
+@media(min-width:560px){.f-row.f-2{grid-template-columns:1fr 1fr}}
+
+/* Player cards (dynamic, count-driven) */
+.player-card{border:1px solid var(--color-line);border-radius:var(--radius-md);padding:16px;margin-top:12px;background:var(--color-surface)}
+.player-card h4{margin:0 0 4px;font-size:.95rem}
+.player-card h4 .p-badge{display:inline-grid;place-items:center;min-width:26px;height:26px;padding:0 7px;border-radius:8px;background:var(--color-bg);border:1px solid var(--color-line);font-family:var(--font-mono);font-size:.74rem;margin-right:8px}
+
+/* Payment */
+.pay-box{border:1px solid var(--color-line);border-radius:var(--radius-md);padding:14px;margin-top:12px;background:var(--color-surface);display:grid;gap:6px}
+.pay-box .pay-name{font-weight:800}
+.pay-box code{font-family:var(--font-mono);font-size:.95rem;background:var(--color-bg);border:1px solid var(--color-line);border-radius:8px;padding:6px 10px;overflow-wrap:anywhere}
+.radio-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.radio-pill{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:10px 18px;border:1px solid var(--color-line);border-radius:var(--radius-pill);font-weight:700;cursor:pointer;background:var(--color-surface)}
+.radio-pill input{width:20px;height:20px;accent-color:var(--primitive-gold-deep)}
+.radio-pill:has(input:checked){border-color:var(--primitive-black);background:var(--primitive-black);color:#fff}
+.radio-pill:has(input:focus-visible){box-shadow:var(--focus-ring)}
+.checkline-lg{display:flex;gap:10px;align-items:flex-start;margin-top:var(--space-4);font-size:.92rem;cursor:pointer}
+.checkline-lg input{width:22px;height:22px;flex:0 0 22px;margin-top:2px;accent-color:var(--primitive-gold-deep)}
+
+/* Fee summary (sticky on desktop) */
+.fee-card{background:var(--color-surface-dark);color:#fff;border-radius:var(--radius-lg);padding:22px 20px;position:sticky;top:88px;border:1px solid var(--primitive-line-dark)}
+.fee-card h3{color:#fff;margin-bottom:4px}
+.fee-card .fee-line{display:flex;justify-content:space-between;gap:10px;padding-block:9px;border-bottom:1px dashed #333;font-size:.94rem}
+.fee-card .fee-line span:last-child{font-family:var(--font-mono)}
+.fee-total{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-top:14px}
+.fee-total strong{font-size:1.7rem;color:var(--color-accent-bright);font-family:var(--font-mono)}
+.fee-card p{color:#bdbdbd;font-size:.85rem}
+@media(max-width:959px){.fee-card{position:static}}
+
+/* Submit + states */
+.reg-actions{padding:22px 20px;display:grid;gap:10px}
+.submit-btn{position:relative}
+.submit-btn .spinner{display:none;width:18px;height:18px;border-radius:50%;border:2px solid rgba(0,0,0,.25);border-top-color:currentColor;animation:spin .7s linear infinite}
+.submit-btn.loading .spinner{display:inline-block}
+.submit-btn.loading{pointer-events:none;opacity:.75}
+@keyframes spin{to{transform:rotate(360deg)}}
+.form-status{display:none;border-radius:10px;padding:12px 14px;font-size:.9rem;font-weight:600}
+.form-status.show{display:block}
+.form-status.error{display:block;background:#fdecea;color:#8f1d17;border:1px solid #f5c6c0}
+
+/* Success panel */
+.reg-success{background:var(--card-bg);border:1px solid var(--card-border);border-left:6px solid var(--color-accent);border-radius:var(--radius-lg);padding:28px 22px;box-shadow:var(--shadow-sm);grid-column:1/-1}
+.reg-success .ok-mark{width:52px;height:52px;border-radius:50%;background:var(--primitive-black);color:var(--color-accent-bright);display:grid;place-items:center;font-size:1.5rem;margin-bottom:14px}
+.reg-success dl{display:grid;gap:8px;margin:18px 0}
+.reg-success .s-row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--color-line);padding-block:8px;font-size:.94rem}
+.reg-success .s-row dd{margin:0;font-weight:700;text-align:right;overflow-wrap:anywhere}
+.reg-success .await{background:#fff8e3;border:1px solid var(--color-accent);border-radius:10px;padding:12px 14px;font-weight:700;font-size:.92rem}
+@media (prefers-reduced-motion:reduce){.submit-btn .spinner{animation-duration:.001ms}}

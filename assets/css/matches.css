@@ -1,0 +1,82 @@
+/* AF TOURNAMENTS — Part 7: matches, results, leaderboard.
+   Token-only (var(--*)). Premium black/gold restraint, mobile-first.
+   Tables become labelled cards under 640px — no horizontal overflow. */
+
+.matches{background:var(--color-surface);border-block:1px solid var(--color-line)}
+.matches .section-head{max-width:720px}
+
+/* Badges: glyph + text, never color alone */
+.m-badge{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:.7rem;font-weight:700;letter-spacing:.12em;border-radius:999px;padding:5px 12px;border:1px solid var(--color-line);background:var(--color-bg);color:var(--color-ink)}
+.m-badge .glyph{font-size:.8rem}
+.m-scheduled{background:var(--color-bg);color:var(--color-muted);border-color:var(--color-line)}
+.m-live{background:#0f1f14;color:#2f9e5f;border-color:#2f9e5f}
+.m-completed{background:var(--primitive-black);color:var(--color-accent-bright);border-color:var(--primitive-black)}
+.m-cancelled{background:#fdecea;color:#8f1d17;border-color:#e5a09a}
+.m-vis{background:#fff8e3;color:var(--primitive-gold-deep);border-color:var(--primitive-gold-deep)}
+
+/* Filters */
+.m-filters{display:flex;flex-wrap:wrap;gap:10px;align-items:end;background:var(--color-bg);border:1px solid var(--color-line);border-radius:var(--radius-md);padding:14px;margin:14px 0}
+.m-filters .filter-field{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.m-filters label{font-size:.72rem;font-weight:700;font-family:var(--font-mono);letter-spacing:.1em;color:var(--color-muted)}
+.m-filters select{min-height:44px;border:1px solid var(--color-line);border-radius:10px;background:var(--color-surface);padding:9px 12px;font-size:.92rem;color:var(--color-ink);max-width:100%}
+.m-filters select:focus{outline:none;border-color:var(--primitive-gold-deep);box-shadow:var(--focus-ring)}
+.m-subnav{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px}
+.m-subnav a{min-height:44px;display:inline-flex;align-items:center;padding:10px 16px;border-radius:999px;border:1px solid var(--color-line);background:var(--color-surface);font-weight:700;font-size:.88rem;text-decoration:none}
+.m-subnav a:focus-visible{outline:none;box-shadow:var(--focus-ring)}
+
+/* Match cards */
+.m-grid{display:grid;gap:14px;margin-top:var(--space-4)}
+@media(min-width:700px){.m-grid{grid-template-columns:repeat(2,1fr)}}
+.m-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-xs);display:flex;flex-direction:column}
+.m-card::before{content:"";display:block;height:5px;background:var(--color-line)}
+.m-card[data-status="live"]::before{background:#2f9e5f}
+.m-card[data-status="completed"]::before{background:var(--color-accent)}
+.m-card[data-status="cancelled"]::before{background:#e5a09a}
+.m-card-body{padding:18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.m-card h3{margin:0;font-size:1.08rem}
+.m-meta{font-size:.86rem;color:var(--color-muted)}
+.m-note{background:#fff8e3;border:1px solid var(--color-accent);border-radius:10px;padding:10px 12px;font-size:.88rem}
+.m-mini-results{margin:0;padding:0;list-style:none;display:grid;gap:6px;font-size:.86rem}
+.m-mini-results li{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed var(--color-line);padding-block:5px}
+.m-mini-results b{font-variant-numeric:tabular-nums}
+
+/* Leaderboard */
+.lb-wrap{margin-top:var(--space-4)}
+.lb-table{width:100%;border-collapse:collapse;font-size:.9rem;background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius-md);overflow:hidden}
+.lb-table caption{text-align:left;font-weight:800;padding:14px 16px;font-size:1rem}
+.lb-table th,.lb-table td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--color-line);font-variant-numeric:tabular-nums}
+.lb-table th{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;color:var(--color-muted);background:var(--color-bg)}
+.lb-table tbody tr:last-child td{border-bottom:none}
+.lb-table td[data-rank]{font-weight:800}
+.lb-table tr[data-top]{background:#fffdf3}
+.lb-table .num{text-align:right}
+.table-note{font-size:.82rem;color:var(--color-muted);margin-top:8px}
+
+/* Responsive tables → cards (no horizontal scroll) */
+@media(max-width:640px){
+  .lb-table,.lb-table tbody,.lb-table tr,.lb-table td{display:block;width:100%}
+  .lb-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .lb-table{border:none;background:transparent}
+  .lb-table tbody{display:grid;gap:10px}
+  .lb-table tr{background:var(--card-bg);border:1px solid var(--card-border);border-radius:var(--radius-md);padding:12px 14px}
+  .lb-table td{border:none;padding:5px 0;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .lb-table td::before{content:attr(data-label);font-family:var(--font-mono);font-size:.66rem;letter-spacing:.1em;color:var(--color-muted);font-weight:700}
+  .lb-table td[data-rank]{font-size:1rem}
+  .lb-table .num{text-align:right}
+}
+
+/* States */
+.m-state{border:1px dashed var(--color-line);border-radius:var(--radius-lg);padding:28px 20px;text-align:center;background:var(--color-bg);margin-top:var(--space-4)}
+.m-state h3{margin-bottom:6px}
+.m-state p{color:var(--color-muted);margin-inline:auto}
+.m-loading{display:flex;gap:10px;align-items:center;justify-content:center;padding:26px;color:var(--color-muted);font-size:.9rem}
+.m-loading .spinner{width:18px;height:18px;border-radius:50%;border:2px solid var(--color-line);border-top-color:var(--primitive-gold-deep);animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Focus + motion */
+.m-filters select:focus-visible,.m-subnav a:focus-visible,.m-card a:focus-visible,.m-card button:focus-visible{outline:none;box-shadow:var(--focus-ring)}
+.res-row input:focus{outline:none;border-color:var(--primitive-gold-deep)!important;box-shadow:var(--focus-ring)}
+@media (prefers-reduced-motion:reduce){
+  .m-card{transition:none}
+  .m-loading .spinner{animation:none}
+}
